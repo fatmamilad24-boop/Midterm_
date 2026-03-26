@@ -7607,7 +7607,7 @@ MonoBehaviour:
   m_GravityApplicationMode: 0
   m_ForwardSource: {fileID: 0}
   m_LeftHandMoveAction:
-    m_UseReference: 0
+    m_UseReference: 1
     m_Action:
       m_Name: Left Hand Move
       m_Type: 0
@@ -7619,7 +7619,7 @@ MonoBehaviour:
       m_Flags: 0
     m_Reference: {fileID: 0}
   m_RightHandMoveAction:
-    m_UseReference: 0
+    m_UseReference: 1
     m_Action:
       m_Name: Right Hand Move
       m_Type: 0
@@ -16388,6 +16388,7 @@ GameObject:
   - component: {fileID: 1586233137}
   - component: {fileID: 1586233136}
   - component: {fileID: 1586233135}
+  - component: {fileID: 1586233138}
   m_Layer: 0
   m_Name: main camera
   m_TagString: Untagged
@@ -16439,6 +16440,18 @@ Transform:
   - {fileID: 1616392540}
   m_Father: {fileID: 791006804}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1586233138
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1586233134}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a98f34da4e744a8182b4f07ae15c50f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1588175917
 PrefabInstance:
   m_ObjectHideFlags: 0
