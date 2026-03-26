@@ -1,137 +1,80 @@
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
-public class ProMenuWithSound : MonoBehaviour
+public class AutoMenuUI : MonoBehaviour
 {
-    private AudioSource audioSource;
-
-    void Awake()
+    void Start()
     {
-        CreateEverything();
-        CreateAudio();
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+
+        CreateUI();
     }
 
-    void CreateAudio()
+    void CreateUI()
     {
-        GameObject audioObj = new GameObject("Audio");
-        audioSource = audioObj.AddComponent<AudioSource>();
-    }
-
-    void CreateEverything()
-    {
-        // EVENT SYSTEM
-        if (FindObjectOfType<EventSystem>() == null)
-        {
-            GameObject es = new GameObject("EventSystem");
-            es.AddComponent<EventSystem>();
-            es.AddComponent<StandaloneInputModule>();
-        }
-
-        // CANVAS
+        // Canvas
         GameObject canvasObj = new GameObject("Canvas");
         Canvas canvas = canvasObj.AddComponent<Canvas>();
         canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-
         canvasObj.AddComponent<CanvasScaler>();
         canvasObj.AddComponent<GraphicRaycaster>();
 
-        // BACKGROUND
-        GameObject bg = new GameObject("Background");
-        bg.transform.SetParent(canvasObj.transform);
+        // Panel
+        GameObject panelObj = new GameObject("Panel");
+        panelObj.transform.SetParent(canvas.transform);
+        Image panel = panelObj.AddComponent<Image>();
+        panel.color = new Color(0, 0, 0, 0.7f);
+        RectTransform panelRect = panelObj.GetComponent<RectTransform>();
+        panelRect.sizeDelta = new Vector2(300, 200);
+        panelRect.anchoredPosition = Vector2.zero;
 
-        Image bgImg = bg.AddComponent<Image>();
-        bgImg.color = new Color(0.05f, 0.05f, 0.08f, 1f);
+        // Start Button
+        CreateButton(panelObj.transform, "Start Game", new Vector2(0, 30), StartGame);
 
-        RectTransform bgRT = bg.GetComponent<RectTransform>();
-        bgRT.anchorMin = Vector2.zero;
-        bgRT.anchorMax = Vector2.one;
-        bgRT.offsetMin = Vector2.zero;
-        bgRT.offsetMax = Vector2.zero;
-
-        // TITLE
-        CreateText(canvasObj.transform, "MY GAME", new Vector2(0, 180), 42, Color.white);
-
-        // BUTTONS
-        CreateButton(canvasObj.transform, "START", new Vector2(0, 30), new Color(0.2f, 0.8f, 0.3f), StartGame);
-        CreateButton(canvasObj.transform, "QUIT", new Vector2(0, -50), new Color(0.9f, 0.2f, 0.2f), QuitGame);
+        // Quit Button
+        CreateButton(panelObj.transform, "Quit", new Vector2(0, -40), QuitGame);
     }
 
-    void CreateButton(Transform parent, string text, Vector2 position, Color color, UnityEngine.Events.UnityAction action)
+    void CreateButton(Transform parent, string text, Vector2 pos, UnityEngine.Events.UnityAction action)
     {
-        GameObject btn = new GameObject(text);
-        btn.transform.SetParent(parent);
+        GameObject btnObj = new GameObject(text);
+        btnObj.transform.SetParent(parent);
 
-        Image img = btn.AddComponent<Image>();
-        img.color = color;
+        Image img = btnObj.AddComponent<Image>();
+        img.color = Color.gray;
 
-        Button button = btn.AddComponent<Button>();
+        Button btn = btnObj.AddComponent<Button>();
+        btn.onClick.AddListener(action);
 
-        RectTransform rt = btn.GetComponent<RectTransform>();
-        rt.sizeDelta = new Vector2(260, 70);
-        rt.anchoredPosition = position;
+        RectTransform rect = btnObj.GetComponent<RectTransform>();
+        rect.sizeDelta = new Vector2(180, 40);
+        rect.anchoredPosition = pos;
 
-        // TEXT
-        CreateText(btn.transform, text, Vector2.zero, 24, Color.white);
+        // Text
+        GameObject txtObj = new GameObject("Text");
+        txtObj.transform.SetParent(btnObj.transform);
 
-        // CLICK SOUND + ACTION
-        button.onClick.AddListener(() => PlayClickSound());
-        button.onClick.AddListener(action);
-    }
+        Text txt = txtObj.AddComponent<Text>();
+        txt.text = text;
+        txt.font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf"); // <-- FIXED
+        txt.alignment = TextAnchor.MiddleCenter;
+        txt.color = Color.white;
+        txt.fontSize = 16;
 
-    void CreateText(Transform parent, string text, Vector2 position, int size, Color color)
-    {
-        GameObject tObj = new GameObject("Text");
-        tObj.transform.SetParent(parent);
-
-        Text t = tObj.AddComponent<Text>();
-        t.text = text;
-        t.fontSize = size;
-        t.color = color;
-        t.alignment = TextAnchor.MiddleCenter;
-        t.font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
-
-        RectTransform rt = tObj.GetComponent<RectTransform>();
-        rt.sizeDelta = new Vector2(300, 80);
-        rt.anchoredPosition = position;
-    }
-
-    void PlayClickSound()
-    {
-        if (audioSource == null) return;
-
-        // Simple built-in beep (no external file needed)
-        audioSource.PlayOneShot(CreateBeep());
-    }
-
-    AudioClip CreateBeep()
-    {
-        int frequency = 1000;
-        int sampleRate = 44100;
-        float duration = 0.1f;
-
-        AudioClip clip = AudioClip.Create("beep", (int)(sampleRate * duration), 1, sampleRate, false);
-        float[] samples = new float[(int)(sampleRate * duration)];
-
-        for (int i = 0; i < samples.Length; i++)
-        {
-            samples[i] = Mathf.Sin(2 * Mathf.PI * frequency * i / sampleRate) * 0.3f;
-        }
-
-        clip.SetData(samples, 0);
-        return clip;
+        RectTransform txtRect = txtObj.GetComponent<RectTransform>();
+        txtRect.sizeDelta = new Vector2(180, 40);
+        txtRect.anchoredPosition = Vector2.zero;
     }
 
     void StartGame()
     {
-        Debug.Log("START CLICKED");
-        SceneManager.LoadScene("GameScene");
+        SceneManager.LoadScene("Demo 2 - Office Set 1"); // Make sure scene is in Build Settings
     }
 
     void QuitGame()
     {
-        Debug.Log("QUIT CLICKED");
         Application.Quit();
     }
 }
