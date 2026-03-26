@@ -1,1 +1,118 @@
-{}
+{
+    "name": "XRI Default Input Actions",
+    "maps": [
+        {
+            "name": "xri head",
+            "id": "5a969b71-7c05-47bd-865e-686dc9ed8c7c",
+            "actions": [
+                {
+                    "name": "New action",
+                    "type": "Value",
+                    "id": "5e160794-10d4-40d9-af23-71da9ead45c4",
+                    "expectedControlType": "Vector3",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": []
+        },
+        {
+            "name": "xri lefthand",
+            "id": "0d9f83d3-81ff-4d4b-b028-ee811e428a0d",
+            "actions": [
+                {
+                    "name": "New action",
+                    "type": "Button",
+                    "id": "8b53b7e0-4751-4ed5-82f6-f8dd128143ff",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "New action1",
+                    "type": "Button",
+                    "id": "661ddeec-a14b-4a99-b003-84f896bf21d5",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "1cc67390-866a-4f99-aad3-db80674ea5c2",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "New action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b38cc616-5236-438a-b8d8-5d1eeffe0500",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "New action1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "xri righthand",
+            "id": "4b264887-fae5-4091-b864-fb34d9c6ba0e",
+            "actions": [
+                {
+                    "name": "New action",
+                    "type": "Button",
+                    "id": "b8a0e768-7ab2-465f-8cf5-5a1d57a29578",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "New action1",
+                    "type": "Button",
+                    "id": "1cbf7d40-7109-40d5-a4b6-6f8570503daf",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "f3b41cba-68f5-4883-9dcf-3edaf2c018f2",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "New action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "15df5397-b9bf-4574-b5b4-e530ae2e9700",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "New action1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
