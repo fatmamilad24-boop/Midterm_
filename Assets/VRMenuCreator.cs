@@ -3,18 +3,16 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 
-public class VRMenuCreator : MonoBehaviour
+public class VRMenuSmall : MonoBehaviour
 {
     private Canvas canvas;
 
     void Start()
     {
         CreateCanvas();
-        CreatePanel();
-        CreateTitle();
-        CreateButton("Start Game", new Vector2(0, -50), Color.green, StartGame);
-        CreateButton("Quit Game", new Vector2(0, -120), Color.red, QuitGame);
-        CreateButton("Pause", new Vector2(150, 100), Color.yellow, PauseGame);
+        CreateButton("Start Game", new Vector3(0, 0.1f, 0), Color.green, StartGame);
+        CreateButton("Quit Game", new Vector3(0, -0.05f, 0), Color.red, QuitGame);
+        CreateButton("Pause", new Vector3(0.15f, 0.2f, 0), Color.yellow, PauseGame);
     }
 
     void CreateCanvas()
@@ -24,75 +22,47 @@ public class VRMenuCreator : MonoBehaviour
         canvas = canvasObj.AddComponent<Canvas>();
         canvas.renderMode = RenderMode.WorldSpace;
         canvas.worldCamera = Camera.main;
-        canvasObj.AddComponent<CanvasScaler>().scaleFactor = 100f;
+        canvasObj.AddComponent<CanvasScaler>().scaleFactor = 1f;
         canvasObj.AddComponent<GraphicRaycaster>();
-        canvas.GetComponent<RectTransform>().sizeDelta = new Vector2(400, 300);
-
-        // Position in front of camera
-        canvasObj.transform.position = Camera.main.transform.position + Camera.main.transform.forward * 2f;
+        canvasObj.transform.localScale = Vector3.one * 0.2f; // small UI
+        // Place a bit in front of camera
+        canvasObj.transform.position = Camera.main.transform.position + Camera.main.transform.forward * 1.5f;
         canvasObj.transform.rotation = Quaternion.LookRotation(canvasObj.transform.position - Camera.main.transform.position);
-        canvasObj.transform.localScale = Vector3.one * 0.01f;
     }
 
-    void CreatePanel()
-    {
-        GameObject panelObj = new GameObject("Background_Panel");
-        panelObj.transform.SetParent(canvas.transform);
-        RectTransform rt = panelObj.AddComponent<RectTransform>();
-        rt.sizeDelta = new Vector2(400, 300);
-        panelObj.AddComponent<CanvasRenderer>();
-        Image img = panelObj.AddComponent<Image>();
-        img.color = new Color(0.2f, 0.6f, 0.9f, 0.8f); // soft blue
-        rt.localPosition = Vector3.zero;
-    }
-
-    void CreateTitle()
-    {
-        GameObject titleObj = new GameObject("Title_Text");
-        titleObj.transform.SetParent(canvas.transform);
-        RectTransform rt = titleObj.AddComponent<RectTransform>();
-        rt.sizeDelta = new Vector2(400, 60);
-        rt.localPosition = new Vector3(0, 100, 0);
-        TextMeshProUGUI tmp = titleObj.AddComponent<TextMeshProUGUI>();
-        tmp.text = "VR Escape Room Game";
-        tmp.alignment = TextAlignmentOptions.Center;
-        tmp.fontSize = 50;
-        tmp.color = Color.white;
-    }
-
-    void CreateButton(string text, Vector2 position, Color color, UnityEngine.Events.UnityAction action)
+    void CreateButton(string text, Vector3 localPos, Color color, UnityEngine.Events.UnityAction action)
     {
         GameObject buttonObj = new GameObject(text + "_Button");
         buttonObj.transform.SetParent(canvas.transform);
-        RectTransform rt = buttonObj.AddComponent<RectTransform>();
-        rt.sizeDelta = new Vector2(160, 50);
-        rt.localPosition = new Vector3(position.x, position.y, 0);
+        buttonObj.transform.localPosition = localPos;
 
-        Button button = buttonObj.AddComponent<Button>();
+        RectTransform rt = buttonObj.AddComponent<RectTransform>();
+        rt.sizeDelta = new Vector2(120, 40);
+
         Image img = buttonObj.AddComponent<Image>();
         img.color = color;
 
-        button.onClick.AddListener(action);
+        Button btn = buttonObj.AddComponent<Button>();
+        btn.onClick.AddListener(action);
 
-        // Add Text
-        GameObject textObj = new GameObject("Text");
-        textObj.transform.SetParent(buttonObj.transform);
-        RectTransform textRt = textObj.AddComponent<RectTransform>();
-        textRt.sizeDelta = rt.sizeDelta;
-        textRt.localPosition = Vector3.zero;
+        // Text
+        GameObject txtObj = new GameObject("Text");
+        txtObj.transform.SetParent(buttonObj.transform);
+        RectTransform txtRt = txtObj.AddComponent<RectTransform>();
+        txtRt.sizeDelta = rt.sizeDelta;
+        txtRt.localPosition = Vector3.zero;
 
-        TextMeshProUGUI tmp = textObj.AddComponent<TextMeshProUGUI>();
+        TextMeshProUGUI tmp = txtObj.AddComponent<TextMeshProUGUI>();
         tmp.text = text;
-        tmp.fontSize = 30;
         tmp.alignment = TextAlignmentOptions.Center;
+        tmp.fontSize = 24;
         tmp.color = Color.white;
     }
 
-    // Button Callbacks
     void StartGame()
     {
         Debug.Log("Start Game pressed");
-        // SceneManager.LoadScene("YourSceneName"); // uncomment and set your scene name
+        // SceneManager.LoadScene("YourSceneName"); // Replace with your main scene
     }
 
     void QuitGame()
